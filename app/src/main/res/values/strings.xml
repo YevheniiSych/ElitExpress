@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ElitExpress</string>
+
+    <string name="checkInternet">Перевірте інтернет з\'єднання та перезавантажте додаток</string>
+    <string name="ok">ОК</string>
+    <string name="connectionError">Помилка з\'єднання</string>
+</resources>
