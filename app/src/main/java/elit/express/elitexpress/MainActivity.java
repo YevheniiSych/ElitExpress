@@ -1,7 +1,5 @@
 package elit.express.elitexpress;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +8,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,25 +17,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (isNetworkAvailable()) {
-//            Intent intent = new Intent("RatesActivity");
-//            startActivity(intent);
-            finish();
-        } else {
-            AlertDialog.Builder aBuilder = new AlertDialog.Builder(this);
-            aBuilder.setMessage(R.string.checkInternet)
-                    .setCancelable(true)
-                    .setNegativeButton(R.string.ok,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    finish();
-                                }
-                            });
-            AlertDialog alert = aBuilder.create();
-            alert.setTitle(R.string.connectionError);
-            alert.show();
-        }
+        if (isNetworkAvailable())
+            networkAvailable();
+        else
+            networkNotAvailable();
     }
 
     private boolean isNetworkAvailable() {
@@ -57,6 +42,28 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    private void networkAvailable() {
+//        Intent intent = new Intent("RatesActivity");
+//        startActivity(intent);
+//        finish();
+    }
+
+    private void networkNotAvailable() {
+        AlertDialog.Builder aBuilder = new AlertDialog.Builder(this);
+        aBuilder.setMessage(R.string.checkInternet)
+                .setCancelable(true)
+                .setNegativeButton(R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finish();
+                            }
+                        });
+        AlertDialog alert = aBuilder.create();
+        alert.setTitle(R.string.connectionError);
+        alert.show();
     }
 
 }
