@@ -1,10 +1,8 @@
 package elit.express.elitexpress;
 
 import android.app.AlertDialog;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -15,21 +13,17 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.zip.Inflater;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class LoadingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_loading);
 
-        if (isNetworkAvailable()) {
-            Items.setReservationActivity(this);
-            finish();
-        }
-        else
-            networkNotAvailable();
+        checkNetwork();
     }
 
 
@@ -79,13 +73,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder aBuilder = new AlertDialog.Builder(this);
         aBuilder.setMessage(R.string.checkInternet)
                 .setCancelable(true)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                finish();
-                            }
-                        })
-                .setNegativeButton(R.string.buttonCancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();
@@ -94,6 +82,34 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alert = aBuilder.create();
         alert.setTitle(R.string.connectionError);
         alert.show();
+    }
+
+    void checkNetwork(){
+        if (isNetworkAvailable()) {
+            Items.setReservationActivity(LoadingActivity.this);
+            finish();
+        }
+        else {
+            networkNotAvailable();
+
+            //check internet every 2 sec
+            final Timer timer = new Timer();
+            timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (isNetworkAvailable()) {
+                                Items.setReservationActivity(LoadingActivity.this);
+                                timer.cancel();
+                                finish();
+                            }
+                        }
+                    });
+                }
+            }, 0, 2000);
+        }
     }
 
 }

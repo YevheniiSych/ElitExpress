@@ -27,6 +27,11 @@ public class Items {
         //activity.finish();
     }
 
+    static void setLoadingActivity(Activity activity){
+        Intent intent = new Intent(activity,LoadingActivity.class);
+        activity.startActivity(intent);
+    }
+
     static void showInfo(Activity activity){
         AlertDialog.Builder aBuilder = new AlertDialog.Builder(activity);
         aBuilder.setMessage(R.string.info)
