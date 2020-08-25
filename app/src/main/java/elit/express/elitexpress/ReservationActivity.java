@@ -10,12 +10,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.Date;
+
 public class ReservationActivity extends AppCompatActivity {
+
+    Filler filler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation);
+
+        filler=new Filler(this);
+        fillInitialData();
     }
 
     @Override
@@ -47,7 +54,12 @@ public class ReservationActivity extends AppCompatActivity {
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        //finish();
         super.onBackPressed();
     }
+
+    void fillInitialData(){
+        filler.setDate();
+    }
+
+
 }

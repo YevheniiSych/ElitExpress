@@ -9,25 +9,25 @@ import android.view.MenuInflater;
 
 public class Items {
 
-    static public void setReservationActivity(Activity activity){
+    static void setReservationActivity(Activity activity){
         Intent intent = new Intent("ReservationActivity");
         activity.startActivity(intent);
 //        activity.finish();
     }
 
-    static public void setRegistrationActivity(Activity activity){
+    static void setRegistrationActivity(Activity activity){
         Intent intent = new Intent("RegistrationActivity");
         activity.startActivity(intent);
         //activity.finish();
     }
 
-    static public void setHistoryActivity(Activity activity){
+    static void setHistoryActivity(Activity activity){
         Intent intent = new Intent("HistoryActivity");
         activity.startActivity(intent);
         //activity.finish();
     }
 
-    static public void showInfo(Activity activity){
+    static void showInfo(Activity activity){
         AlertDialog.Builder aBuilder = new AlertDialog.Builder(activity);
         aBuilder.setMessage(R.string.info)
                 .setCancelable(true)

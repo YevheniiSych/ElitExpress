@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_margin="10sp"
         android:background="@color/white">
 
         <TextView
@@ -23,6 +24,7 @@
             android:id="@+id/dateButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="textStart"
             style="?android:attr/borderlessButtonStyle" />
 
 
