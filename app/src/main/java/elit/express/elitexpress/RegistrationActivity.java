@@ -77,7 +77,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
         editor.putString("name",name);
         editor.putString("phone",phone);
-        editor.commit();
+        editor.apply();
     }
-
 }

@@ -4,14 +4,17 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 
 import androidx.fragment.app.DialogFragment;
 
 import java.io.FileInputStream;
 import java.text.DateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -64,6 +67,40 @@ class Filler {
     @SuppressLint("SimpleDateFormat")
     public String getDate(){
         return new java.text.SimpleDateFormat("yyyy-MM-dd").format(new Date(calendar.getTimeInMillis()));
+    }
+
+    void fillRaceSpinner(){
+
+        String[] race={"Суми-Київ","Київ-Суми"};
+        ArrayAdapter<String> raceAdapter = new ArrayAdapter<String>(activity, R.layout.row, R.id.weekofday, race);
+
+        Spinner spRace = activity.findViewById(R.id.raceSpinner);
+
+        spRace.setAdapter(raceAdapter);
+    }
+
+    String getRace(){
+        Spinner spRace = activity.findViewById(R.id.raceSpinner);
+        String race=String.valueOf(spRace.getSelectedItemId()+1);
+        return race;
+    }
+
+
+    public void fillTimesSpinner(ArrayList<Status1> arrayList){
+        ArrayList<String> departureTimeList = new ArrayList<String>();
+
+
+
+
+        for (int i = 0; i < arrayList.size(); i++) {
+
+        }
+
+
+
+//        spDepartureTime = view.findViewById(R.id.departureTimeList);
+//        ArrayAdapter<String> departureTimeAdapter = new ArrayAdapter<String>(context, R.layout.row, R.id.weekofday, departureTimeList);
+//        spDepartureTime.setAdapter(departureTimeAdapter);
     }
 
 }

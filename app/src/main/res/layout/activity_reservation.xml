@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="textStart"
+            android:textSize="18sp"
             style="?android:attr/borderlessButtonStyle" />
 
 
@@ -34,7 +35,7 @@
             android:text="@string/voyage" />
 
         <Spinner
-            android:id="@+id/voyageList"
+            android:id="@+id/raceSpinner"
             style="@style/spinnerStyle"/>
 
         <TextView
@@ -43,7 +44,7 @@
             android:text="@string/departure" />
 
         <Spinner
-            android:id="@+id/departureList"
+            android:id="@+id/departureSpinner"
             style="@style/spinnerStyle"/>
 
         <TextView
@@ -89,7 +90,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/Pay"
+        android:id="@+id/payButton"
         android:layout_width="match_parent"
         android:layout_height="70sp"
         android:backgroundTint="@color/colorPrimary"
