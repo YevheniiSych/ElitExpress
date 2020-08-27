@@ -1,9 +1,7 @@
 package elit.express.elitexpress;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class Status1 {
 

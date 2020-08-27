@@ -1,43 +1,29 @@
 package elit.express.elitexpress;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.http.Query;
-
-import static android.widget.Toast.LENGTH_LONG;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ReservationActivity extends AppCompatActivity {
 
-    Filler filler;
-    ArrayList<Status1> status1ArrayList;
+    private Filler filler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation);
 
-        filler=new Filler(this);
+        filler = new Filler(this);
         fillInitialData();
-
-        getStatus1();
     }
 
     @Override
@@ -72,39 +58,28 @@ public class ReservationActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    void getStatus1(){
-        final String status="1";
-        final String app="ios";
-        final String marshrut_reis=filler.getRace();
-        final String data_reis=filler.getDate();
-
-        NetworkService.getInstance()
-                .getJSONApi()
-                .getStatus1(status,app,marshrut_reis,data_reis)
-                .enqueue(new Callback<ArrayList<Status1>>() {
-                    @Override
-                    public void onResponse(@NonNull Call<ArrayList<Status1>> call, @NonNull Response<ArrayList<Status1>> response) {
-                        status1ArrayList=response.body();
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<ArrayList<Status1>> call, @NonNull Throwable t) {
-                        t.printStackTrace();
-                    }
-                });
-    }
-
-    void fillInitialData(){
+    void fillInitialData() {
         filler.setDate();
-        filler.fillRaceSpinner();
+        filler.setRaceSpinner();
+        setOnItemSelectedRaceSpinner();
+        //filler.statusTest();
+        //filler.setTimeSpinner();
+//        filler.setDepartureAndArrivalSpinner();
     }
 
-//    void getStatus1(){
-//        SendRequest sendRequest1 = new SendRequest();
-//
-//        String request1 = "app=ios" + "&status=1" + "&marshrut_reis=" + "1" + "&data_reis=" + "2020-08-27";
-//        sendRequest1.execute("https://m.sumy.kiev.ua", request1);
-////        sendRequest1.execute("http://192.168.0.102/elit.php", request1);
-//    }
+    void setOnItemSelectedRaceSpinner() {
+        Spinner raceSp = findViewById(R.id.raceSpinner);
+        raceSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                filler.setTimeSpinner();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
 
 }

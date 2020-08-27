@@ -4,35 +4,33 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.view.Menu;
-import android.view.MenuInflater;
 
 public class Items {
 
-    static void setReservationActivity(Activity activity){
+    static void setReservationActivity(Activity activity) {
         Intent intent = new Intent("ReservationActivity");
         activity.startActivity(intent);
 //        activity.finish();
     }
 
-    static void setRegistrationActivity(Activity activity){
+    static void setRegistrationActivity(Activity activity) {
         Intent intent = new Intent("RegistrationActivity");
         activity.startActivity(intent);
         //activity.finish();
     }
 
-    static void setHistoryActivity(Activity activity){
+    static void setHistoryActivity(Activity activity) {
         Intent intent = new Intent("HistoryActivity");
         activity.startActivity(intent);
         //activity.finish();
     }
 
-    static void setLoadingActivity(Activity activity){
-        Intent intent = new Intent(activity,LoadingActivity.class);
+    static void setLoadingActivity(Activity activity) {
+        Intent intent = new Intent(activity, LoadingActivity.class);
         activity.startActivity(intent);
     }
 
-    static void showInfo(Activity activity){
+    static void showInfo(Activity activity) {
         AlertDialog.Builder aBuilder = new AlertDialog.Builder(activity);
         aBuilder.setMessage(R.string.info)
                 .setCancelable(true)

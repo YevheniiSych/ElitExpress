@@ -9,7 +9,7 @@
     <string name="toInfo">Інформація</string>
 
     <string name="hintEditName">Прізвище, Ім\'я</string>
-    <string name="hintEditPhone">Мобільний телефон</string>
+    <string name="hintEditPhone">Мобільний телефон 0123456789</string>
     <string name="buttonSave">Зберегти</string>
     <string name="reservation">Бронювання місць</string>
     <string name="history">Історія поїздок</string>
@@ -27,7 +27,7 @@
     <string name="buttonPay">сплатити онлайн</string>
     <string name="reserveButton">Забронювати</string>
     <string name="checkInputData">Перевірте введені дані</string>
-    <string name="checkTel">Телефон має бути у форматі 095*******</string>
+    <string name="checkTel">Перевірте введений номер телефону</string>
     <string name="confirm">Підтвердити</string>
     <string name="close">Закрити</string>
     <string name="price">Вартість квитків</string>

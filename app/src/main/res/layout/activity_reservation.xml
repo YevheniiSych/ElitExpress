@@ -62,7 +62,7 @@
             android:text="@string/departureTime" />
 
         <Spinner
-            android:id="@+id/departureTimeList"
+            android:id="@+id/timeSpinner"
             style="@style/spinnerStyle"/>
 
         <TextView

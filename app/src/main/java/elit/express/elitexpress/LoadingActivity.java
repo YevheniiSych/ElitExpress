@@ -27,7 +27,6 @@ public class LoadingActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -36,7 +35,7 @@ public class LoadingActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu){
+    public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.toHistory).setVisible(false);
         menu.findItem(R.id.toEditName).setVisible(false);
         return super.onPrepareOptionsMenu(menu);
@@ -84,13 +83,13 @@ public class LoadingActivity extends AppCompatActivity {
         alert.show();
     }
 
-    void checkNetwork(){
+    void checkNetwork() {
         if (isNetworkAvailable()) {
-            Items.setReservationActivity(LoadingActivity.this);
+//            Items.setReservationActivity(LoadingActivity.this);
+            Items.setRegistrationActivity(LoadingActivity.this);
             finish();
-        }
-        else {
-            networkNotAvailable();
+        } else {
+            networkNotAvailable();//show alert
 
             //check internet every 2 sec
             final Timer timer = new Timer();
