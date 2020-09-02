@@ -12,15 +12,17 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Statuses {
-    private final String app = "ios";
+    static private final String app = "android";
 
-    private ArrayList<Status1> status1ArrayList;
-    private ArrayList<Status5> status5ArrayList;
-    private ArrayList<Status7> status7ArrayList;
-    private String price;
-    private String orderId;
+    static private ArrayList<Status1> status1ArrayList;
+    static private ArrayList<Status2Otpr> status2Otprs;
+    static private ArrayList<Status2Prib> status2Pribs;
+    static private ArrayList<Status5> status5ArrayList;
+    static private ArrayList<Status7> status7ArrayList;
+    static private String price;
+    static private String orderId;
 
-    public void sendStatus1(final ReceiveCallback callback, final String marshrut_reis, final String data_reis) {
+    static public void sendStatus1(final ReceiveCallback callback, final String marshrut_reis, final String data_reis) {
         final String status = "1";
 
         NetworkService.getInstance()
@@ -29,7 +31,7 @@ public class Statuses {
                 .enqueue(new Callback<ArrayList<Status1>>() {
                     @Override
                     public void onResponse(@NonNull Call<ArrayList<Status1>> call, @NonNull Response<ArrayList<Status1>> response) {
-                        status1ArrayList = response.body();
+                        status1ArrayList=response.body();
                         callback.onCallback();
                     }
 
@@ -40,26 +42,28 @@ public class Statuses {
                 });
     }
 
-    public void sendStatus2(final ReceiveCallback callback, final String marshrut_reis) {
+    static public void sendStatus2(final ReceiveCallback callback, final String marshrut_reis) {
         final String status = "2";
 
         NetworkService.getInstance()
                 .getJSONApi()
                 .sendStatus2(status, app, marshrut_reis)
-                .enqueue(new Callback<String>() {
+                .enqueue(new Callback<Status2>() {
                     @Override
-                    public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                    public void onResponse(Call<Status2> call, Response<Status2> response) {
+                        status2Otprs=response.body().getOtpr();
+                        status2Pribs=response.body().getPrib();
                         callback.onCallback();
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-                        t.printStackTrace();
+                    public void onFailure(Call<Status2> call, Throwable t) {
+
                     }
                 });
     }
 
-    void sendStatus3(final ReceiveCallback callback, final String zone, final String marshrut_reis) {
+    static void sendStatus3(final ReceiveCallback callback, final String zone, final String marshrut_reis) {
         final String status = "3";
 
         NetworkService.getInstance()
@@ -80,7 +84,7 @@ public class Statuses {
                 });
     }
 
-    void sendStatus4(final String marshrut_reis, final String id_reis, final String date,
+    static void sendStatus4(final ReceiveCallback callback, final String marshrut_reis, final String id_reis, final String date,
                      final String time, final String fio, final String tel,
                      final String mest, final String id_from, final String id_to,
                      final String price, final String info) {
@@ -95,6 +99,7 @@ public class Statuses {
                     public void onResponse(Call<Map<String, String>[]> call, Response<Map<String, String>[]> response) {
                         Map<String, String> responseMap = response.body()[0];
                         orderId = responseMap.get("order");
+                        callback.onCallback();
                     }
 
                     @Override
@@ -104,7 +109,7 @@ public class Statuses {
                 });
     }
 
-    public void sendStatus5(final ReceiveCallback callback, final String phone){
+    static public void sendStatus5(final ReceiveCallback callback, final String phone){
         final String status="5";
 
         NetworkService.getInstance()
@@ -125,7 +130,7 @@ public class Statuses {
 
     }
 
-    void sendStatus6(final String orderid, final String new_status){
+    static void sendStatus6(final ReceiveCallback callback, final String orderid, final String new_status){
         final String status="6";
 
         NetworkService.getInstance()
@@ -134,7 +139,7 @@ public class Statuses {
                 .enqueue(new Callback<Map<String, String>[]>() {
                     @Override
                     public void onResponse(Call<Map<String, String>[]> call, Response<Map<String, String>[]> response) {
-
+                        callback.onCallback();
                     }
 
                     @Override
@@ -145,7 +150,7 @@ public class Statuses {
 
     }
 
-    public void sendStatus7(final ReceiveCallback callback, final String marshrut_reis) {
+    static public void sendStatus7(final ReceiveCallback callback, final String marshrut_reis) {
         final String status = "7";
 
         NetworkService.getInstance()
@@ -165,28 +170,36 @@ public class Statuses {
                 });
     }
 
-    public ArrayList<Status1> getStatus1ArrayList() {
+    static public ArrayList<Status1> getStatus1ArrayList() {
         return status1ArrayList;
     }
 
 
-    public ArrayList<Status7> getStatus7ArrayList() {
+    static public ArrayList<Status7> getStatus7ArrayList() {
         return status7ArrayList;
     }
 
-    public ArrayList<Status5> getStatus5ArrayList() {
+    static public ArrayList<Status5> getStatus5ArrayList() {
         return status5ArrayList;
     }
 
-    public String getPrice() {
+    static public ArrayList<Status2Otpr> getStatus2Otprs() {
+        return status2Otprs;
+    }
+
+    static public ArrayList<Status2Prib> getStatus2Pribs() {
+        return status2Pribs;
+    }
+
+    static public String getPrice() {
         return price;
     }
 
-    public String getOrderId() {
+    static public String getOrderId() {
         return orderId;
     }
 
-    void getStatus2() {
+    static void getStatus2() {
         SendRequest sendRequest1 = new SendRequest();
 
         String request1 = "app=android" + "&status=2" + "&marshrut_reis=" + "1";

@@ -1,12 +1,15 @@
 package elit.express.elitexpress;
 
-import android.content.SharedPreferences;
+import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,15 +18,19 @@ import java.util.ArrayList;
 
 public class HistoryActivity extends AppCompatActivity {
 
-    private Statuses statuses;
-    ArrayList <Status5> status5ArrayList;
+    private ArrayList<Status5> status5ArrayList;
+    LinearLayout historyLinearLayout;
+    ListView listView;
+    ArrayList<Status5> historyList;
 
+
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        statuses=new Statuses();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         setInitialData();
     }
@@ -48,15 +55,20 @@ public class HistoryActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void setInitialData(){
+    void setInitialData() {
+        historyLinearLayout = findViewById(R.id.historyLinearLayout);
+        listView = findViewById(R.id.historyListView);
         downloadHistory();
+        historyList = new ArrayList<>();
     }
 
-    void downloadHistory(){
+    void downloadHistory() {
 
-        String phone=RegistrationActivity.getPhone();
+        LoadingDialog.loading(this);
 
-        statuses.sendStatus5(new ReceiveCallback() {
+        String phone = RegistrationActivity.getPhone();
+
+        Statuses.sendStatus5(new ReceiveCallback() {
             @Override
             public void onCallback() {
                 showHistory();
@@ -64,8 +76,82 @@ public class HistoryActivity extends AppCompatActivity {
         }, phone);
     }
 
-    void showHistory(){
-        status5ArrayList=statuses.getStatus5ArrayList();
+    void showHistory() {
+        status5ArrayList = Statuses.getStatus5ArrayList();
+        showTrips();
+    }
+
+    void showTrips() {
+        selectReservedTrips();
+        selectPaidTrips();
+        selectFinishedTrips();
+        if(!historyList.isEmpty()) {
+            HistoryAdapter adapter = new HistoryAdapter(this, historyList);
+            listView.setAdapter(adapter);
+        }
+        else {
+            showEmpty();
+        }
+        LoadingDialog.dismiss();
+    }
+
+    void selectReservedTrips() {
+//        listView.addHeaderView(createHeader(getString(R.string.finishedTrips)), null, false);
+        boolean j=true;
+        for (int i = 0; i < status5ArrayList.size(); i++) {
+            if ((status5ArrayList.get(i).getStatus().equals("2") ||
+                    status5ArrayList.get(i).getStatus().equals("3")) &&
+                    status5ArrayList.get(i).getStatusPay().equals("1")
+            ) {
+                if(j) {
+                    historyList.add(new Status5("reserved"));
+                    j=false;
+                }
+                status5ArrayList.get(i).setPredoplata("reserved");
+                historyList.add(status5ArrayList.get(i));
+            }
+        }
+    }
+
+    void selectPaidTrips() {
+//        listView.addHeaderView(createHeader(getString(R.string.paidTrips)), null, false);
+        boolean j=true;
+        for (int i = 0; i < status5ArrayList.size(); i++) {
+            if (!status5ArrayList.get(i).getStatusPay().equals("1") &&
+                    !status5ArrayList.get(i).getStatus().equals("4")
+                    && !status5ArrayList.get(i).getStatus().equals("2")) {
+                if(j) {
+                    historyList.add(new Status5("paid"));
+                    j=false;
+                }
+                status5ArrayList.get(i).setPredoplata("paid");
+                historyList.add(status5ArrayList.get(i));
+            }
+        }
+    }
+
+    void selectFinishedTrips() {
+//        listView.addHeaderView(createHeader(getString(R.string.reservedTrips)), null, false);
+        boolean j=true;
+        for (int i = 0; i < status5ArrayList.size(); i++) {
+            if (status5ArrayList.get(i).getStatus().equals("4")) {
+                if(j) {
+                    historyList.add(new Status5("finished"));
+                    j=false;
+                }
+                status5ArrayList.get(i).setPredoplata("finished");
+                historyList.add(status5ArrayList.get(i));
+            }
+        }
+    }
+
+    void showEmpty() {
+        TextView empty = new TextView(this);
+        empty.setText(R.string.emptyTrips);
+        empty.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        empty.setTextSize(20);
+
+        historyLinearLayout.addView(empty);
     }
 
 }

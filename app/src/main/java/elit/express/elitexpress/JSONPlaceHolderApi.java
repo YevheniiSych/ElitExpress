@@ -1,6 +1,8 @@
 package elit.express.elitexpress;
 
 
+import android.widget.ArrayAdapter;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -22,7 +24,7 @@ public interface JSONPlaceHolderApi {
 
     @FormUrlEncoded
     @POST("/")
-    Call<String> sendStatus2(
+    Call<Status2> sendStatus2(
             @Field("status") String status,
             @Field("app") String app,
             @Field("marshrut_reis") String marshrut_reis

@@ -9,7 +9,7 @@
     <string name="toInfo">Інформація</string>
 
     <string name="hintEditName">Прізвище, Ім\'я</string>
-    <string name="hintEditPhone">Мобільний телефон 0123456789</string>
+    <string name="hintEditPhone">Мобільний телефон\n0123456789</string>
     <string name="buttonSave">Зберегти</string>
     <string name="reservation">Бронювання місць</string>
     <string name="history">Історія поїздок</string>
@@ -32,8 +32,9 @@
     <string name="close">Закрити</string>
     <string name="price">Вартість квитків</string>
     <string name="choose">Вибрати</string>
-    <string name="finishedTrips">Закінчені поїздки</string>
+    <string name="finishedTrips">Завершені поїздки</string>
     <string name="reservedTrips">Заброньовані поїздки</string>
+    <string name="emptyTrips">Поїздки відсутні</string>
     <string name="info">При виникненні будь яких питань звертайтесь за номерами\n050 3281 777\n067 4477 089</string>
     <string name="paidTrips">Оплачені поїздки</string>
     <string name="checkCancel">Ви дійсно бажаєте відмінити бронювання?</string>

@@ -3,26 +3,27 @@ package elit.express.elitexpress;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.zip.Inflater;
 
 class Filler {
     private Activity activity;
     private Calendar calendar;
-    private Statuses statuses;// contains methods to send requests
 
 
     Filler(Activity activity) {
         this.activity = activity;
         calendar = Calendar.getInstance();
-        statuses = new Statuses();
     }
 
     void setDate() {
@@ -48,6 +49,8 @@ class Filler {
             public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
                 calendar.set(year, monthOfYear, dayOfMonth);
                 setDateToButton();// set Text date into date button
+                LoadingDialog.loading(activity);
+                setTimeSpinner();
             }
         }, year, month, day);
 
@@ -65,7 +68,7 @@ class Filler {
     }
 
     @SuppressLint("SimpleDateFormat")
-    public String getDate() {
+    String getDate() {
         return new java.text.SimpleDateFormat("yyyy-MM-dd")
                 .format(new Date(calendar.getTimeInMillis()));//format date into yyyy-MM-dd for request
     }
@@ -88,10 +91,11 @@ class Filler {
 
 
     void setTimeSpinner() {
-        statuses.sendStatus7(new ReceiveCallback() {
+        Statuses.sendStatus7(new ReceiveCallback() {
             @Override
             public void onCallback() {
                 fillTimeSpinner();
+                LoadingDialog.dismiss();
             }
         }, getRace());
     }
@@ -99,11 +103,13 @@ class Filler {
     private void fillTimeSpinner() {
         ArrayList<String> time = new ArrayList<>();
 
-        ArrayList<Status7> status7ArrayList = statuses.getStatus7ArrayList();
+        ArrayList<Status7> status7ArrayList = Statuses.getStatus7ArrayList();
 
         for (int i = 0; i < status7ArrayList.size(); i++) {
-            String formattedTime = Parser.parseTime(status7ArrayList.get(i).getTime());//format time to 00:00
-            time.add(formattedTime);
+            if(isTimeActual(status7ArrayList.get(i).getTime())) {
+                String formattedTime = Parser.parseTime(status7ArrayList.get(i).getTime());//format time to 00:00
+                time.add(formattedTime);
+            }
         }
 
         ArrayAdapter<String> timeAdapter = new ArrayAdapter<String>(activity, R.layout.row, R.id.weekofday, time);
@@ -112,34 +118,163 @@ class Filler {
         timeSp.setAdapter(timeAdapter);
     }
 
+    private boolean isTimeActual(String time){
+        int hours=Integer.parseInt(time.split(":")[0]),
+                minutes=Integer.parseInt(time.split(":")[1]) ;
+        Calendar chosenTime=Calendar.getInstance();
+        chosenTime.set(
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH),
+                hours,
+                minutes);
+        String choosen = new java.text.SimpleDateFormat("dd-MM-yyyy HH:mm")
+                .format(new Date(chosenTime.getTimeInMillis()));//format date into dd-MM-yyyy for text in button
+        String now = new java.text.SimpleDateFormat("dd-MM-yyyy HH:mm")
+                .format(new Date(System.currentTimeMillis()));//format date into dd-MM-yyyy for text in button
+        if(chosenTime.before(Calendar.getInstance()))
+            return false;
+        else
+            return true;
+    }
+
     public void setDepartureAndArrivalSpinner() {
-        statuses.getStatus2();
-//        statuses.sendStatus2(new ReciveCallback() {
-//            @Override
-//            public void onCallback() {
-//                fillDepartureSpinner();
-//                fillArrivalSpinner();
-//            }
-//        },getRace());
+        Statuses.sendStatus2(new ReceiveCallback() {
+            @Override
+            public void onCallback() {
+                fillDepartureSpinner();
+                fillArrivalSpinner();
+                LoadingDialog.dismiss();
+            }
+        },getRace());
     }
 
     private void fillDepartureSpinner() {
+        ArrayList<Status2Otpr> status2Otprs=Statuses.getStatus2Otprs();
 
+        ArrayList<String> departure=new ArrayList<>();
+
+        for (int i = 0; i < status2Otprs.size(); i++) {
+            departure.add(status2Otprs.get(i).getCityOtpr());
+        }
+
+        ArrayAdapter<String> departureAdapter=new ArrayAdapter<String>(activity, R.layout.row, R.id.weekofday, departure);
+
+        Spinner departureSp=activity.findViewById(R.id.departureSpinner);
+        departureSp.setAdapter(departureAdapter);
     }
 
     private void fillArrivalSpinner() {
+        ArrayList<Status2Prib> status2Pribs=Statuses.getStatus2Pribs();
 
+        ArrayList<String> arrival=new ArrayList<>();
+
+        for (int i = 0; i <status2Pribs.size(); i++) {
+            arrival.add(status2Pribs.get(i).getPribCity());
+        }
+
+        ArrayAdapter<String> arrivalAdapter=new ArrayAdapter<String>(activity, R.layout.row, R.id.weekofday, arrival);
+
+        Spinner arrivalSp=activity.findViewById(R.id.arrivalSpinner);
+        arrivalSp.setAdapter(arrivalAdapter);
     }
 
-    void statusTest(){
-        //statuses.sendStatus3("65",getRace());
-//        statuses.sendStatus4("1","14335", "2020-09-05",
-//                "01:00:00", "xxxxx", "yyyyy", "1",
-//                "37", "44", "300", "rsgdfz");
-//        statuses.getStatus5();
-        //statuses.sendStatus5("0959144687");
-//        statuses.getStatus6();
-        statuses.sendStatus6("138147","1");
+    public void setPlaceCountSpinner(){
+        ArrayList<String> placeCount=new ArrayList<>();
+
+        for (int i = 1; i <=5; i++) {
+            placeCount.add(String.valueOf(i));
+        }
+
+        ArrayAdapter<String> placeCountAdapter=new ArrayAdapter<String>(activity, R.layout.row, R.id.weekofday, placeCount);
+
+        Spinner placeCountSp=activity.findViewById(R.id.placeCountSpinner);
+        placeCountSp.setAdapter(placeCountAdapter);
+    }
+
+
+    public String getReisID(){
+        ArrayList<Status1> status1ArrayList=Statuses.getStatus1ArrayList();
+        String selectedTime=getTime();
+        for (int i = 0; i < status1ArrayList.size(); i++) {
+            if(status1ArrayList.get(i).getTimes().equals(selectedTime))
+                return status1ArrayList.get(i).getId();
+        }
+        return "1";
+    }
+
+    String getTime(){
+        Spinner timeSp=activity.findViewById(R.id.timeSpinner);
+        String time=Parser.addSecondsToTime(timeSp.getSelectedItem().toString());
+        return time;
+    }
+
+    String getPlaceCount(){
+        Spinner placeCountSp=activity.findViewById(R.id.placeCountSpinner);
+        String placeCount=placeCountSp.getSelectedItem().toString();
+        return placeCount;
+    }
+
+    String getID_from(){
+        Spinner departureSp=activity.findViewById(R.id.departureSpinner);
+
+        String selectedCityOtpr=departureSp.getSelectedItem().toString();
+
+        ArrayList<Status2Otpr> status2Otprs=Statuses.getStatus2Otprs();
+        for (int i = 0; i < status2Otprs.size(); i++) {
+            String cityOtpr=status2Otprs.get(i).getCityOtpr();
+            if(selectedCityOtpr.equals(cityOtpr))
+                return status2Otprs.get(i).getOtprId();
+        }
+        return null;
+    }
+
+    String getId_to(){
+        Spinner arrivalSp=activity.findViewById(R.id.arrivalSpinner);
+
+        String selectedCityPrib=arrivalSp.getSelectedItem().toString();
+
+        ArrayList<Status2Prib> status2Pribs=Statuses.getStatus2Pribs();
+        for (int i = 0; i < status2Pribs.size(); i++) {
+            String cityPrib=status2Pribs.get(i).getPribCity();
+            if(selectedCityPrib.equals(cityPrib))
+                return status2Pribs.get(i).getPribId();
+        }
+        return null;
+    }
+
+    String getInfo(){
+        EditText commentET=activity.findViewById(R.id.commentEditText);
+        String info=commentET.getText().toString();
+        return info;
+    }
+
+    String getTimeZone(){
+        Spinner departureSp=activity.findViewById(R.id.departureSpinner);
+        String selectedCity_otpr=departureSp.getSelectedItem().toString();
+        ArrayList<Status2Otpr> status2Otprs=Statuses.getStatus2Otprs();
+
+        Spinner arrivalSp=activity.findViewById(R.id.arrivalSpinner);
+        String selectedPrib_city=arrivalSp.getSelectedItem().toString();
+        ArrayList<Status2Prib> status2Pribs=Statuses.getStatus2Pribs();
+
+        int otpr_zone=0,prib_zone=0;
+
+        for (int i = 0; i < status2Otprs.size(); i++) {
+            String city_otpr=status2Otprs.get(i).getCityOtpr();
+            if(city_otpr.equals(selectedCity_otpr)) {
+                otpr_zone = Integer.parseInt(status2Otprs.get(i).getOptrZone());
+            }
+        }
+
+        for (int i = 0; i < status2Pribs.size(); i++) {
+            String prib_city=status2Pribs.get(i).getPribCity();
+            if(prib_city.equals(selectedPrib_city)) {
+                prib_zone = Integer.parseInt(status2Pribs.get(i).getPribZone());
+            }
+        }
+
+        return String.valueOf(otpr_zone+prib_zone);
     }
 
 

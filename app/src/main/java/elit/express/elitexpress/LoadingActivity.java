@@ -1,8 +1,10 @@
 package elit.express.elitexpress;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -18,10 +20,13 @@ import java.util.TimerTask;
 
 public class LoadingActivity extends AppCompatActivity {
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         checkNetwork();
     }
@@ -68,28 +73,14 @@ public class LoadingActivity extends AppCompatActivity {
         return false;
     }
 
-    private void networkNotAvailable() {
-        AlertDialog.Builder aBuilder = new AlertDialog.Builder(this);
-        aBuilder.setMessage(R.string.checkInternet)
-                .setCancelable(true)
-                .setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-        AlertDialog alert = aBuilder.create();
-        alert.setTitle(R.string.connectionError);
-        alert.show();
-    }
-
     void checkNetwork() {
         if (isNetworkAvailable()) {
 //            Items.setReservationActivity(LoadingActivity.this);
             Items.setRegistrationActivity(LoadingActivity.this);
             finish();
         } else {
-            networkNotAvailable();//show alert
+            Alerts alerts =new Alerts();
+            alerts.networkNotAvailable(this);//show alert
 
             //check internet every 2 sec
             final Timer timer = new Timer();

@@ -1,13 +1,17 @@
 package elit.express.elitexpress;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,13 +25,16 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText nameET;
     private EditText phoneET;
 
-    private static boolean firstInit=true;
+    private static boolean firstInit = true;
 
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         init();
     }
@@ -53,15 +60,24 @@ public class RegistrationActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void init(){
-        nameET=findViewById(R.id.editName);
-        phoneET=findViewById(R.id.editPhone);
+
+    void init() {
+        nameET = findViewById(R.id.editName);
+        phoneET = findViewById(R.id.editPhone);
+
+        phoneET.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                phone=v.getText().toString();
+                return false;
+            }
+        });
 
         setNameTel();
 
-        if(!phone.equals("default value") && firstInit) {
+        if (!phone.equals("default value") && firstInit) {
             Items.setReservationActivity(RegistrationActivity.this);
-            firstInit=false;
+            firstInit = false;
             finish();
         }
 

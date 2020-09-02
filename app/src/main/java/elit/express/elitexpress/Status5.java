@@ -41,6 +41,10 @@ public class Status5 {
     @Expose
     private String status;
 
+    public Status5(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }

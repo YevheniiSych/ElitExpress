@@ -53,7 +53,7 @@
             android:text="@string/arrival" />
 
         <Spinner
-            android:id="@+id/arrivalList"
+            android:id="@+id/arrivalSpinner"
             style="@style/spinnerStyle"/>
 
         <TextView
@@ -71,7 +71,7 @@
             android:text="@string/placeCountInp" />
 
         <Spinner
-            android:id="@+id/placeCountList"
+            android:id="@+id/placeCountSpinner"
             style="@style/spinnerStyle"/>
 
         <TextView
@@ -86,7 +86,6 @@
             android:backgroundTint="@color/colorPrimary"
             android:hint="@string/comment"
             android:inputType="text" />
-
     </LinearLayout>
 
     <Button

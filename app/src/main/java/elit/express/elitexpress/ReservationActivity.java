@@ -1,15 +1,19 @@
 package elit.express.elitexpress;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ReservationActivity extends AppCompatActivity {
@@ -17,13 +21,17 @@ public class ReservationActivity extends AppCompatActivity {
     private Filler filler;
 
 
+
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         filler = new Filler(this);
-        fillInitialData();
+        setInitialData();
     }
 
     @Override
@@ -58,13 +66,13 @@ public class ReservationActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    void fillInitialData() {
+    void setInitialData() {
         filler.setDate();
         filler.setRaceSpinner();
         setOnItemSelectedRaceSpinner();
-        //filler.statusTest();
-        //filler.setTimeSpinner();
-//        filler.setDepartureAndArrivalSpinner();
+        //filler.setDepartureAndArrivalSpinner();
+        filler.setPlaceCountSpinner();
+        setPayButtonClickListener();
     }
 
     void setOnItemSelectedRaceSpinner() {
@@ -72,7 +80,9 @@ public class ReservationActivity extends AppCompatActivity {
         raceSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                LoadingDialog.loading(ReservationActivity.this);
                 filler.setTimeSpinner();
+                filler.setDepartureAndArrivalSpinner();
             }
 
             @Override
@@ -80,6 +90,79 @@ public class ReservationActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    void setPayButtonClickListener(){
+        Button payButton = findViewById(R.id.payButton);
+        payButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoadingDialog.loading(ReservationActivity.this);
+                Statuses.sendStatus1(new ReceiveCallback() {
+                    @Override
+                    public void onCallback() {
+                        Statuses.sendStatus3(new ReceiveCallback() {
+                            @Override
+                            public void onCallback() {
+                                LoadingDialog.dismiss();
+                                reserve();
+                            }
+                        },filler.getTimeZone(),filler.getRace());
+
+                    }
+                },filler.getRace(),filler.getDate());
+            }
+        });
+    }
+
+    void reserve(){
+        Alerts alerts=new Alerts();
+        alerts.reserveAlert(new ReceiveCallback() {
+            @Override
+            public void onCallback() {
+                LoadingDialog.dismiss();
+                Pay pay=new Pay();
+                pay.sendPay(ReservationActivity.this,Statuses.getOrderId());
+            }
+        }, this, filler);
+    }
+
+    void setOnItemSelectedDepartureSpinner(){
+        Spinner departureSp = findViewById(R.id.departureSpinner);
+        departureSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                setPrice();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    void setOnItemSelectedArrivalSpinner(){
+        Spinner arrivalSp = findViewById(R.id.arrivalSpinner);
+        arrivalSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                setPrice();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    void setPrice(){
+        Statuses.sendStatus3(new ReceiveCallback() {
+            @Override
+            public void onCallback() {
+            }
+        },filler.getTimeZone(),filler.getRace());
     }
 
 }
