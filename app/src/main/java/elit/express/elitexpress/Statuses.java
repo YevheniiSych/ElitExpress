@@ -150,7 +150,7 @@ public class Statuses {
 
     }
 
-    static public void sendStatus7(final ReceiveCallback callback, final String marshrut_reis) {
+    static void sendStatus7(final ReceiveCallback callback, final String marshrut_reis) {
         final String status = "7";
 
         NetworkService.getInstance()
@@ -170,32 +170,32 @@ public class Statuses {
                 });
     }
 
-    static public ArrayList<Status1> getStatus1ArrayList() {
+    static ArrayList<Status1> getStatus1ArrayList() {
         return status1ArrayList;
     }
 
 
-    static public ArrayList<Status7> getStatus7ArrayList() {
+    static ArrayList<Status7> getStatus7ArrayList() {
         return status7ArrayList;
     }
 
-    static public ArrayList<Status5> getStatus5ArrayList() {
+    static ArrayList<Status5> getStatus5ArrayList() {
         return status5ArrayList;
     }
 
-    static public ArrayList<Status2Otpr> getStatus2Otprs() {
+    static ArrayList<Status2Otpr> getStatus2Otprs() {
         return status2Otprs;
     }
 
-    static public ArrayList<Status2Prib> getStatus2Pribs() {
+    static ArrayList<Status2Prib> getStatus2Pribs() {
         return status2Pribs;
     }
 
-    static public String getPrice() {
+    static String getPrice() {
         return price;
     }
 
-    static public String getOrderId() {
+    static String getOrderId() {
         return orderId;
     }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,95 +7,103 @@
     tools:context=".ReservationActivity"
     android:background="@color/white">
 
-    <LinearLayout
-        app:layout_constraintTop_toTopOf="parent"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="10sp"
-        android:background="@color/white">
+        android:layout_above="@id/payButton"
+        android:layout_alignParentTop="true">
 
-        <TextView
-            android:id="@+id/dateTextView"
-            style="@style/textViewReservationStyle"
-            android:text="@string/dateInput" />
-
-        <Button
-            android:id="@+id/dateButton"
+        <LinearLayout
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="textStart"
-            android:textSize="18sp"
-            style="?android:attr/borderlessButtonStyle" />
+            android:orientation="vertical"
+            android:layout_margin="10sp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/dateTextView"
+                style="@style/textViewReservationStyle"
+                android:text="@string/dateInput" />
+
+            <Button
+                android:id="@+id/dateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textSize="18sp"
+                style="?android:attr/borderlessButtonStyle" />
 
 
-        <TextView
-            android:id="@+id/voyageTextView"
-            style="@style/textViewReservationStyle"
-            android:text="@string/voyage" />
+            <TextView
+                android:id="@+id/voyageTextView"
+                style="@style/textViewReservationStyle"
+                android:text="@string/voyage" />
 
-        <Spinner
-            android:id="@+id/raceSpinner"
-            style="@style/spinnerStyle"/>
+            <Spinner
+                android:id="@+id/raceSpinner"
+                style="@style/spinnerStyle" />
 
-        <TextView
-            android:id="@+id/departureTextView"
-            style="@style/textViewReservationStyle"
-            android:text="@string/departure" />
+            <TextView
+                android:id="@+id/departureTextView"
+                style="@style/textViewReservationStyle"
+                android:text="@string/departure" />
 
-        <Spinner
-            android:id="@+id/departureSpinner"
-            style="@style/spinnerStyle"/>
+            <Spinner
+                android:id="@+id/departureSpinner"
+                style="@style/spinnerStyle" />
 
-        <TextView
-            android:id="@+id/arrivalTextView"
-            style="@style/textViewReservationStyle"
-            android:text="@string/arrival" />
+            <TextView
+                android:id="@+id/arrivalTextView"
+                style="@style/textViewReservationStyle"
+                android:text="@string/arrival" />
 
-        <Spinner
-            android:id="@+id/arrivalSpinner"
-            style="@style/spinnerStyle"/>
+            <Spinner
+                android:id="@+id/arrivalSpinner"
+                style="@style/spinnerStyle" />
 
-        <TextView
-            android:id="@+id/departureTimeTextView"
-            style="@style/textViewReservationStyle"
-            android:text="@string/departureTime" />
+            <TextView
+                android:id="@+id/departureTimeTextView"
+                style="@style/textViewReservationStyle"
+                android:text="@string/departureTime" />
 
-        <Spinner
-            android:id="@+id/timeSpinner"
-            style="@style/spinnerStyle"/>
+            <Spinner
+                android:id="@+id/timeSpinner"
+                style="@style/spinnerStyle" />
 
-        <TextView
-            android:id="@+id/placeCountTextView"
-            style="@style/textViewReservationStyle"
-            android:text="@string/placeCountInp" />
+            <TextView
+                android:id="@+id/placeCountTextView"
+                style="@style/textViewReservationStyle"
+                android:text="@string/placeCountInp" />
 
-        <Spinner
-            android:id="@+id/placeCountSpinner"
-            style="@style/spinnerStyle"/>
+            <Spinner
+                android:id="@+id/placeCountSpinner"
+                style="@style/spinnerStyle" />
 
-        <TextView
-            android:id="@+id/commentTextView"
-            style="@style/textViewReservationStyle"
-            android:text="@string/comment" />
+            <TextView
+                android:id="@+id/commentTextView"
+                style="@style/textViewReservationStyle"
+                android:text="@string/comment" />
 
-        <EditText
-            android:id="@+id/commentEditText"
+            <EditText
+                android:id="@+id/commentEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="@string/comment"
+                android:inputType="text" />
+        </LinearLayout>
+    </ScrollView>
+
+        <Button
+            android:id="@+id/payButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimary"
-            android:hint="@string/comment"
-            android:inputType="text" />
-    </LinearLayout>
+            android:text="@string/buttonPay"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"/>
 
-    <Button
-        android:id="@+id/payButton"
-        android:layout_width="match_parent"
-        android:layout_height="70sp"
-        android:backgroundTint="@color/colorPrimary"
-        android:text="@string/buttonPay"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:textColor="@color/white" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
