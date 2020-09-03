@@ -2,7 +2,6 @@ package elit.express.elitexpress;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,9 +10,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ReservationActivity extends AppCompatActivity {
@@ -77,11 +76,15 @@ public class ReservationActivity extends AppCompatActivity {
     void setOnItemSelectedRaceSpinner() {
         Spinner raceSp = findViewById(R.id.raceSpinner);
         raceSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 LoadingDialog.loading(ReservationActivity.this);
                 filler.setTimeSpinner();
                 filler.setDepartureAndArrivalSpinner();
+
+                TextView timeTV=findViewById(R.id.departureTimeTextView);
+                timeTV.setText(getString(R.string.departureTime)+" з " +filler.getRaceCities().split("-")[0]);
             }
 
             @Override
