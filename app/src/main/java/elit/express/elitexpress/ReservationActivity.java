@@ -94,11 +94,6 @@ public class ReservationActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
     void setPayButtonClickListener(){
         Button payButton = findViewById(R.id.payButton);
         payButton.setOnClickListener(new View.OnClickListener() {
