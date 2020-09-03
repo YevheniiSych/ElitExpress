@@ -18,6 +18,7 @@ import java.util.Date;
 class Filler {
     private Activity activity;
     private Calendar calendar;
+    private long minDate;
 
 
     Filler(Activity activity) {
@@ -37,6 +38,8 @@ class Filler {
                     calendar.get(Calendar.HOUR_OF_DAY) + 1,
                     calendar.get(Calendar.MINUTE));
         }
+
+        minDate=calendar.getTimeInMillis();
 
         setDateToButton();// set Text date into date button
         Button dateButton = activity.findViewById(R.id.dateButton);
@@ -65,7 +68,7 @@ class Filler {
             }
         }, year, month, day);
 
-        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+        datePickerDialog.getDatePicker().setMinDate(minDate);
         datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis()+monthInMillis);
         datePickerDialog.show();
     }
