@@ -3,7 +3,6 @@ package elit.express.elitexpress;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.provider.Settings;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -100,6 +99,11 @@ class Filler {
     String getRace() {
         Spinner spRace = activity.findViewById(R.id.raceSpinner);
         return String.valueOf(spRace.getSelectedItemId() + 1);
+    }
+
+    String getRaceCities(){
+        Spinner spRace = activity.findViewById(R.id.raceSpinner);
+        return spRace.getSelectedItem().toString();
     }
 
 
