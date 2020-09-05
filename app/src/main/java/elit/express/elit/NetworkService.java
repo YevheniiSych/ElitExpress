@@ -1,4 +1,4 @@
-package elit.express.elitexpress;
+package elit.express.elit;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

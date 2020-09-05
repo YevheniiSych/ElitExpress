@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="elit.express.elitexpress">
+    package="elit.express.elit">
 
     <application
         android:allowBackup="true"
@@ -9,14 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegistrationActivity">
+        <activity android:name="elit.express.elit.RegistrationActivity">
             <intent-filter>
                 <action android:name="RegistrationActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".HistoryActivity">
+        <activity android:name="elit.express.elit.HistoryActivity">
             android:label="@string/history">
             <intent-filter>
                 <action android:name="HistoryActivity" />
@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ReservationActivity"
+        <activity android:name="elit.express.elit.ReservationActivity"
             android:label="@string/reservation">
             <intent-filter>
                 <action android:name="ReservationActivity" />
@@ -32,7 +32,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoadingActivity">
+        <activity android:name="elit.express.elit.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

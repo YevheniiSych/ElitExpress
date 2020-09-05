@@ -1,10 +1,8 @@
-package elit.express.elitexpress;
+package elit.express.elit;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.view.View;
 
 public class Pay {
     public void sendPay(Activity activity, String orderNumber) {

@@ -1,4 +1,4 @@
-package elit.express.elitexpress;
+package elit.express.elit;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

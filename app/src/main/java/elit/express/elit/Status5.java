@@ -1,4 +1,4 @@
-package elit.express.elitexpress;
+package elit.express.elit;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

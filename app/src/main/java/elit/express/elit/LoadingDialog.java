@@ -1,11 +1,8 @@
-package elit.express.elitexpress;
+package elit.express.elit;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class LoadingDialog {
     static private AlertDialog dialog;
