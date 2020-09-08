@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -133,5 +134,10 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public static String getName() {
         return name;
+    }
+
+    private void setImageSize(){
+        ImageView image=findViewById(R.id.imageView2);
+
     }
 }
