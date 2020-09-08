@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="elit.express.elit.HistoryActivity">
+        <activity android:name="elit.express.elit.HistoryActivity"
             android:label="@string/history">
             <intent-filter>
                 <action android:name="HistoryActivity" />
