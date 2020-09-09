@@ -54,6 +54,7 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     void setInitialData() {
+        LoadingDialog.loading(this);
         historyLinearLayout = findViewById(R.id.historyLinearLayout);
         listView = findViewById(R.id.historyListView);
         downloadHistory();
@@ -61,8 +62,6 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     void downloadHistory() {
-
-        LoadingDialog.loading(this);
 
         String phone = RegistrationActivity.getPhone();
 

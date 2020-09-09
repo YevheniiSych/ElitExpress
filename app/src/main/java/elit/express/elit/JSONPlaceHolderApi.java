@@ -14,6 +14,7 @@ public interface JSONPlaceHolderApi {
     @FormUrlEncoded
     @POST("/")
     Call<ArrayList<Status1>> sendStatus1(
+            @Field("ver") String ver,
             @Field("status") String status,
             @Field("app") String app,
             @Field("marshrut_reis") String marshrut_reis,
@@ -23,6 +24,7 @@ public interface JSONPlaceHolderApi {
     @FormUrlEncoded
     @POST("/")
     Call<Status2> sendStatus2(
+            @Field("ver") String ver,
             @Field("status") String status,
             @Field("app") String app,
             @Field("marshrut_reis") String marshrut_reis
@@ -31,6 +33,7 @@ public interface JSONPlaceHolderApi {
     @FormUrlEncoded
     @POST("/")
     Call<Map<String,String>[]> sendStatus3(
+            @Field("ver") String ver,
             @Field("status") String status,
             @Field("app") String app,
             @Field("marshrut_reis") String marshrut_reis,
@@ -40,6 +43,7 @@ public interface JSONPlaceHolderApi {
     @FormUrlEncoded
     @POST("/")
     Call<Map<String,String>[]> sendStatus4(
+            @Field("ver") String ver,
             @Field("status") String status,
             @Field("app") String app,
             @Field("marshrut_reis") String marshrut_reis,
@@ -59,6 +63,7 @@ public interface JSONPlaceHolderApi {
     @FormUrlEncoded
     @POST("/")
     Call<ArrayList<Status5>> sendStatus5(
+            @Field("ver") String ver,
             @Field("status") String status,
             @Field("app") String app,
             @Field("phone") String phone
@@ -67,6 +72,7 @@ public interface JSONPlaceHolderApi {
     @FormUrlEncoded
     @POST("/")
     Call<Map<String,String>[]> sendStatus6(
+            @Field("ver") String ver,
             @Field("status") String status,
             @Field("app") String app,
             @Field("orderid") String orderid,
@@ -76,6 +82,7 @@ public interface JSONPlaceHolderApi {
     @FormUrlEncoded
     @POST("/")
     Call<ArrayList<Status7>> sendStatus7(
+            @Field("ver") String ver,
             @Field("status") String status,
             @Field("app") String app,
             @Field("marshrut_reis") String marshrut_reis

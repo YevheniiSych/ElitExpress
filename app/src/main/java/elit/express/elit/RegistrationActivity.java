@@ -122,8 +122,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     boolean isTelCorrect() {
-//        String formattedPhone = PhoneNumberUtils.formatNumber(phone);
-//        Toast.makeText(getApplicationContext(),formattedPhone,Toast.LENGTH_LONG).show();
+
 
         return phone.matches("\\d{10}");//check phone number for 10 characters
     }

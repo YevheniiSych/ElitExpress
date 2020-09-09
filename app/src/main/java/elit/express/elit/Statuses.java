@@ -11,6 +11,7 @@ import retrofit2.Response;
 
 public class Statuses {
     static private final String app = "android";
+    static private String ver="2";
 
     static private ArrayList<Status1> status1ArrayList;
     static private ArrayList<Status2Otpr> status2Otprs;
@@ -25,7 +26,7 @@ public class Statuses {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .sendStatus1(status, app, marshrut_reis, data_reis)
+                .sendStatus1(ver,status, app, marshrut_reis, data_reis)
                 .enqueue(new Callback<ArrayList<Status1>>() {
                     @Override
                     public void onResponse(@NonNull Call<ArrayList<Status1>> call, @NonNull Response<ArrayList<Status1>> response) {
@@ -45,7 +46,7 @@ public class Statuses {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .sendStatus2(status, app, marshrut_reis)
+                .sendStatus2(ver,status, app, marshrut_reis)
                 .enqueue(new Callback<Status2>() {
                     @Override
                     public void onResponse(Call<Status2> call, Response<Status2> response) {
@@ -66,7 +67,7 @@ public class Statuses {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .sendStatus3(status, app, marshrut_reis, zone)
+                .sendStatus3(ver,status, app, marshrut_reis, zone)
                 .enqueue(new Callback<Map<String, String>[]>() {
                     @Override
                     public void onResponse(Call<Map<String, String>[]> call, Response<Map<String, String>[]> response) {
@@ -90,7 +91,7 @@ public class Statuses {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .sendStatus4(status,app,marshrut_reis,id_reis,
+                .sendStatus4(ver,status,app,marshrut_reis,id_reis,
                         date,time,fio,tel,mest,id_from,id_to,price,info)
                 .enqueue(new Callback<Map<String, String>[]>() {
                     @Override
@@ -112,7 +113,7 @@ public class Statuses {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .sendStatus5(status,app,phone)
+                .sendStatus5(ver,status,app,phone)
                 .enqueue(new Callback<ArrayList<Status5>>() {
                     @Override
                     public void onResponse(Call<ArrayList<Status5>> call, Response<ArrayList<Status5>> response) {
@@ -133,7 +134,7 @@ public class Statuses {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .sendStatus6(status,app,orderid,new_status)
+                .sendStatus6(ver,status,app,orderid,new_status)
                 .enqueue(new Callback<Map<String, String>[]>() {
                     @Override
                     public void onResponse(Call<Map<String, String>[]> call, Response<Map<String, String>[]> response) {
@@ -153,7 +154,7 @@ public class Statuses {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .sendStatus7(status, app, marshrut_reis)
+                .sendStatus7(ver,status, app, marshrut_reis)
                 .enqueue(new Callback<ArrayList<Status7>>() {
                     @Override
                     public void onResponse(@NonNull Call<ArrayList<Status7>> call, @NonNull Response<ArrayList<Status7>> response) {
@@ -197,49 +198,49 @@ public class Statuses {
         return orderId;
     }
 
-    static void getStatus2() {
-        SendRequest sendRequest1 = new SendRequest();
-
-        String request1 = "app=android" + "&status=2" + "&marshrut_reis=" + "1";
-        sendRequest1.execute("https://test.sumy.kiev.ua", request1);
-//        sendRequest1.execute("http://192.168.0.102/elit.php", request1);
-    }
-
-    void getStatus3() {
-        SendRequest sendRequest1 = new SendRequest();
-
-        String request1 = "app=ios" + "&status=3" + "&zone=65" + "&marshrut_reis=" + "1";
-        sendRequest1.execute("https://test.sumy.kiev.ua", request1);
-//        sendRequest1.execute("http://192.168.0.102/elit.php", request1);
-    }
-
-    void getStatus4(){
-        SendRequest sendRequest1 = new SendRequest();
-        String request4 = "app=android" + "&status=4" + "&marshrut_reis=" + "1"
-                + "&id_reis=" + "14335"
-                + "&date=" + "2020-09-05"
-                + "&time=" + "01:00:00"
-                + "&fio=" + "xxxxxx"
-                + "&tel=" + "yyyy"
-                + "&mest=" + "1"
-                + "&id_from=" + "37"
-                + "&id_to=" + "44"
-                + "&price=" + "300"
-                + "&info=" + "rervdf";
-        sendRequest1.execute("https://test.sumy.kiev.ua", request4);
-    }
-
-    void getStatus5(){
-        SendRequest sendRequest = new SendRequest();
-        String request = "app=android" + "&status=5" + "&phone=" + "0959144687";
-        sendRequest.execute("https://test.sumy.kiev.ua", request);
-    }
-
-    void getStatus6(){
-        SendRequest sendRequest = new SendRequest();
-        String request = "app=android" + "&status=6" + "&orderid=" + "138147" + "&new_status=1";
-
-        sendRequest.execute("https://test.sumy.kiev.ua", request);
-    }
+//    static void getStatus2() {
+//        SendRequest sendRequest1 = new SendRequest();
+//
+//        String request1 = "app=android" + "&status=2" + "&marshrut_reis=" + "1";
+//        sendRequest1.execute("https://test.sumy.kiev.ua", request1);
+////        sendRequest1.execute("http://192.168.0.102/elit.php", request1);
+//    }
+//
+//    void getStatus3() {
+//        SendRequest sendRequest1 = new SendRequest();
+//
+//        String request1 = "app=ios" + "&status=3" + "&zone=65" + "&marshrut_reis=" + "1";
+//        sendRequest1.execute("https://test.sumy.kiev.ua", request1);
+////        sendRequest1.execute("http://192.168.0.102/elit.php", request1);
+//    }
+//
+//    void getStatus4(){
+//        SendRequest sendRequest1 = new SendRequest();
+//        String request4 = "app=android" + "&status=4" + "&marshrut_reis=" + "1"
+//                + "&id_reis=" + "14335"
+//                + "&date=" + "2020-09-05"
+//                + "&time=" + "01:00:00"
+//                + "&fio=" + "xxxxxx"
+//                + "&tel=" + "yyyy"
+//                + "&mest=" + "1"
+//                + "&id_from=" + "37"
+//                + "&id_to=" + "44"
+//                + "&price=" + "300"
+//                + "&info=" + "rervdf";
+//        sendRequest1.execute("https://test.sumy.kiev.ua", request4);
+//    }
+//
+//    void getStatus5(){
+//        SendRequest sendRequest = new SendRequest();
+//        String request = "app=android" + "&status=5" + "&phone=" + "0959144687";
+//        sendRequest.execute("https://test.sumy.kiev.ua", request);
+//    }
+//
+//    void getStatus6(){
+//        SendRequest sendRequest = new SendRequest();
+//        String request = "app=android" + "&status=6" + "&orderid=" + "138147" + "&new_status=1";
+//
+//        sendRequest.execute("https://test.sumy.kiev.ua", request);
+//    }
 
 }
