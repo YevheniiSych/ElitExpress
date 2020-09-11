@@ -39,4 +39,8 @@
     <string name="paidTrips">Оплачені поїздки</string>
     <string name="checkCancel">Ви дійсно бажаєте відмінити бронювання?</string>
     <string name="checkCancelBody">Якщо поїздка оплачена для повернення коштів звертайтесь за номерами\n050 3281 777\n067 4477 089</string>
+    <string name="smsCode">Введіть код з смс-повідомлення</string>
+    <string name="registrationError">Помилка реєстрації</string>
+    <string name="errorCode">Невірний код</string>
+    <string name="timeLeft">Ви зможете повторити операцію через</string>
 </resources>

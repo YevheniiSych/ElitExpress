@@ -88,5 +88,14 @@ public interface JSONPlaceHolderApi {
             @Field("marshrut_reis") String marshrut_reis
     );
 
+    @FormUrlEncoded
+    @POST("/")
+    Call<Map<String,String>[]> sendStatus8(
+            @Field("ver") String ver,
+            @Field("status") String status,
+            @Field("app") String app,
+            @Field("tel") String tel
+    );
+
 }
 

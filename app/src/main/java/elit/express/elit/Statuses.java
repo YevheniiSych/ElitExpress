@@ -20,6 +20,7 @@ public class Statuses {
     static private ArrayList<Status7> status7ArrayList;
     static private String price;
     static private String orderId;
+    static private String smsCode;
 
     static public void sendStatus1(final ReceiveCallback callback, final String marshrut_reis, final String data_reis) {
         final String status = "1";
@@ -169,10 +170,29 @@ public class Statuses {
                 });
     }
 
+    static void sendStatus8(final ReceiveCallback callback,final String tel){
+        final String status = "8";
+
+        NetworkService.getInstance()
+                .getJSONApi()
+                .sendStatus8(ver,status,app,tel)
+                .enqueue(new Callback<Map<String, String>[]>() {
+                    @Override
+                    public void onResponse(Call<Map<String, String>[]> call, Response<Map<String, String>[]> response) {
+                        smsCode=response.body()[0].get("code");
+                        callback.onCallback();
+                    }
+                    @Override
+
+                    public void onFailure(Call<Map<String, String>[]> call, Throwable t) {
+
+                    }
+                });
+    }
+
     static ArrayList<Status1> getStatus1ArrayList() {
         return status1ArrayList;
     }
-
 
     static ArrayList<Status7> getStatus7ArrayList() {
         return status7ArrayList;
@@ -197,6 +217,17 @@ public class Statuses {
     static String getOrderId() {
         return orderId;
     }
+
+    public static String getSmsCode() {
+        return smsCode;
+    }
+
+    //        static void getStatus8() {
+//        SendRequest sendRequest1 = new SendRequest();
+//
+//        String request1 = "app=android"+"&ver="+ver + "&status=8" + "&tel=" + "0959144687";
+//        sendRequest1.execute("https://test.sumy.kiev.ua", request1);
+//    }
 
 //    static void getStatus2() {
 //        SendRequest sendRequest1 = new SendRequest();

@@ -1,21 +1,25 @@
 package elit.express.elit;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Calendar;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -85,8 +89,36 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isTelCorrect()) {
-                    saveNameTel();
-                    Items.setReservationActivity(RegistrationActivity.this);
+
+                    long now=Calendar.getInstance().getTimeInMillis();
+                    long nextSmsTime=getLastSmsTime();
+
+                    if(nextSmsTime==-1
+                        || nextSmsTime<now){
+
+                        LoadingDialog.loading(RegistrationActivity.this);
+                        saveLastSmsTime();
+
+                        Statuses.sendStatus8(new ReceiveCallback() {
+                            @Override
+                            public void onCallback() {
+                                LoadingDialog.dismiss();
+                                if (!Statuses.getSmsCode().equals("0000"))
+                                    smsAlert();
+                                else
+                                    Toast.makeText(getApplicationContext(), R.string.registrationError, Toast.LENGTH_LONG).show();
+//                            alerts.networkNotAvailable(RegistrationActivity.this);
+                            }
+                        }, phone);
+//                    Items.setReservationActivity(RegistrationActivity.this);
+                    }
+                    else {
+                        Calendar leftTimeCalendar=Calendar.getInstance();
+                        leftTimeCalendar.setTimeInMillis(nextSmsTime-now);
+                        String leftTime=leftTimeCalendar.get(Calendar.MINUTE)+"хв "
+                                +leftTimeCalendar.get(Calendar.SECOND)+"c";
+                        Toast.makeText(getApplicationContext(), getString(R.string.timeLeft) + " "+leftTime, Toast.LENGTH_LONG).show();
+                    }
                 } else
                     Toast.makeText(getApplicationContext(), R.string.checkTel, Toast.LENGTH_LONG).show();
             }
@@ -122,9 +154,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     boolean isTelCorrect() {
-
-
-        return phone.matches("\\d{10}");//check phone number for 10 characters
+        return phone.matches("\\d{10}");
     }
 
     public static String getPhone() {
@@ -135,8 +165,55 @@ public class RegistrationActivity extends AppCompatActivity {
         return name;
     }
 
-    private void setImageSize(){
-        ImageView image=findViewById(R.id.imageView2);
+    public void smsAlert(){
+        final android.app.AlertDialog.Builder builder=new AlertDialog.Builder(this);
 
+        final LayoutInflater inflater =getLayoutInflater();
+
+        final View view=inflater.inflate(R.layout.sms_dialog,null);
+
+        builder.setView(view)
+                .setPositiveButton(R.string.confirm,
+                        new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        EditText codeET=view.findViewById(R.id.codeEditText);
+                        String inputCode=codeET.getText().toString();//empty input code
+                        String smsCode=Statuses.getSmsCode();
+
+                        if(inputCode.equals(smsCode)) {
+                            saveNameTel();
+                            Items.setReservationActivity(RegistrationActivity.this);
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(),R.string.errorCode,Toast.LENGTH_LONG).show();
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.buttonCancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .create()
+                .show();
     }
+
+    long getLastSmsTime(){
+        SharedPreferences lastSmsPreference = getPreferences(MODE_PRIVATE);
+
+        return lastSmsPreference.getLong("lastSmsTime",-1);
+    }
+
+    void saveLastSmsTime(){
+        SharedPreferences lastSmsPreference = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = lastSmsPreference.edit();
+
+        long nextSmsTime=Calendar.getInstance().getTimeInMillis()+180000;
+
+        editor.putLong("lastSmsTime",nextSmsTime);
+        editor.apply();
+    }
+
 }
