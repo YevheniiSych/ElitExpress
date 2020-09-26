@@ -78,18 +78,13 @@ public class RegistrationActivity extends AppCompatActivity {
 
         setNameTel();
 
-        if (!phone.equals("default value") && firstInit) {
-            Items.setReservationActivity(RegistrationActivity.this);
-            firstInit = false;
-            finish();
-        }
-
         Button buttonGo = findViewById(R.id.buttonGo);
         buttonGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isTelCorrect()) {
-
+//                    Items.setReservationActivity(RegistrationActivity.this);
+//                    saveNameTel();
                     long now=Calendar.getInstance().getTimeInMillis();
                     long nextSmsTime=getLastSmsTime();
 
@@ -107,17 +102,15 @@ public class RegistrationActivity extends AppCompatActivity {
                                     smsAlert();
                                 else
                                     Toast.makeText(getApplicationContext(), R.string.registrationError, Toast.LENGTH_LONG).show();
-//                            alerts.networkNotAvailable(RegistrationActivity.this);
                             }
                         }, phone);
-//                    Items.setReservationActivity(RegistrationActivity.this);
                     }
                     else {
                         Calendar leftTimeCalendar=Calendar.getInstance();
                         leftTimeCalendar.setTimeInMillis(nextSmsTime-now);
                         String leftTime=leftTimeCalendar.get(Calendar.MINUTE)+"хв "
                                 +leftTimeCalendar.get(Calendar.SECOND)+"c";
-                        Toast.makeText(getApplicationContext(), getString(R.string.timeLeft) + " "+leftTime, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),  getString(R.string.timeLeft) + " "+leftTime, Toast.LENGTH_LONG).show();
                     }
                 } else
                     Toast.makeText(getApplicationContext(), R.string.checkTel, Toast.LENGTH_LONG).show();
@@ -128,7 +121,7 @@ public class RegistrationActivity extends AppCompatActivity {
     //set default name and phone
     void setNameTel() {
 
-        SharedPreferences user = getPreferences(MODE_PRIVATE);
+        SharedPreferences user = getSharedPreferences("user",MODE_PRIVATE);
         //read user data from register
         name = user.getString("name", "default value");
         phone = user.getString("phone", "default value");
@@ -141,7 +134,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     //save name and pone as default
     void saveNameTel() {
-        SharedPreferences user = getPreferences(MODE_PRIVATE);
+        SharedPreferences user = getSharedPreferences("user",MODE_PRIVATE);
         SharedPreferences.Editor editor = user.edit();
 
         name = nameET.getText().toString();
@@ -198,6 +191,13 @@ public class RegistrationActivity extends AppCompatActivity {
                 })
                 .create()
                 .show();
+        //        Button positiveButton = alert.getButton(AlertDialog.BUTTON_POSITIVE);
+//        positiveButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
     }
 
     long getLastSmsTime(){

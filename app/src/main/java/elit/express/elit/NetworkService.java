@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkService {
     private static final String BASE_URL = "https://test.sumy.kiev.ua";
-//        private static final String BASE_URL = "http://192.168.0.102";
+//    private static final String BASE_URL = "http://192.168.0.101";
     private static NetworkService mInstance;
     private Retrofit mRetrofit;
 

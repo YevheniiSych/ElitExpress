@@ -97,5 +97,13 @@ public interface JSONPlaceHolderApi {
             @Field("tel") String tel
     );
 
+    @FormUrlEncoded
+    @POST("/android.php")
+    Call<String> sendStatus11(
+            @Field("app") String app
+    );
+
+
+
 }
 

@@ -43,4 +43,8 @@
     <string name="registrationError">Помилка реєстрації</string>
     <string name="errorCode">Невірний код</string>
     <string name="timeLeft">Ви зможете повторити операцію через</string>
+    <string name="update">Оновлення</string>
+    <string name="updateMessage">Для продовження оновіть додаток</string>
+    <string name="toUpdate">Оновити</string>
+
 </resources>
