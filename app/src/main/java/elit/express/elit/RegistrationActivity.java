@@ -71,7 +71,7 @@ public class RegistrationActivity extends AppCompatActivity {
         phoneET.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                phone = v.getText().toString();
+                phone=v.getText().toString();
                 return false;
             }
         });
@@ -85,11 +85,11 @@ public class RegistrationActivity extends AppCompatActivity {
                 if (isTelCorrect()) {
 //                    Items.setReservationActivity(RegistrationActivity.this);
 //                    saveNameTel();
-                    long now = Calendar.getInstance().getTimeInMillis();
-                    long nextSmsTime = getLastSmsTime();
+                    long now=Calendar.getInstance().getTimeInMillis();
+                    long nextSmsTime=getLastSmsTime();
 
-                    if (nextSmsTime == -1
-                            || nextSmsTime < now) {
+                    if(nextSmsTime==-1
+                        || nextSmsTime<now){
 
                         LoadingDialog.loading(RegistrationActivity.this);
                         saveLastSmsTime();
@@ -104,12 +104,13 @@ public class RegistrationActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), R.string.registrationError, Toast.LENGTH_LONG).show();
                             }
                         }, phone);
-                    } else {
-                        Calendar leftTimeCalendar = Calendar.getInstance();
-                        leftTimeCalendar.setTimeInMillis(nextSmsTime - now);
-                        String leftTime = leftTimeCalendar.get(Calendar.MINUTE) + "хв "
-                                + leftTimeCalendar.get(Calendar.SECOND) + "c";
-                        Toast.makeText(getApplicationContext(), getString(R.string.timeLeft) + " " + leftTime, Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Calendar leftTimeCalendar=Calendar.getInstance();
+                        leftTimeCalendar.setTimeInMillis(nextSmsTime-now);
+                        String leftTime=leftTimeCalendar.get(Calendar.MINUTE)+"хв "
+                                +leftTimeCalendar.get(Calendar.SECOND)+"c";
+                        Toast.makeText(getApplicationContext(),  getString(R.string.timeLeft) + " "+leftTime, Toast.LENGTH_LONG).show();
                     }
                 } else
                     Toast.makeText(getApplicationContext(), R.string.checkTel, Toast.LENGTH_LONG).show();
@@ -120,7 +121,7 @@ public class RegistrationActivity extends AppCompatActivity {
     //set default name and phone
     void setNameTel() {
 
-        SharedPreferences user = getSharedPreferences("user", MODE_PRIVATE);
+        SharedPreferences user = getSharedPreferences("user",MODE_PRIVATE);
         //read user data from register
         name = user.getString("name", "default value");
         phone = user.getString("phone", "default value");
@@ -133,7 +134,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     //save name and pone as default
     void saveNameTel() {
-        SharedPreferences user = getSharedPreferences("user", MODE_PRIVATE);
+        SharedPreferences user = getSharedPreferences("user",MODE_PRIVATE);
         SharedPreferences.Editor editor = user.edit();
 
         name = nameET.getText().toString();
@@ -157,61 +158,61 @@ public class RegistrationActivity extends AppCompatActivity {
         return name;
     }
 
-    public void smsAlert() {
-        final android.app.AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    public void smsAlert(){
+        final android.app.AlertDialog.Builder builder=new AlertDialog.Builder(this);
 
-        final LayoutInflater inflater = getLayoutInflater();
+        final LayoutInflater inflater =getLayoutInflater();
 
-        final View alertView = inflater.inflate(R.layout.sms_dialog, null);
+        final View view=inflater.inflate(R.layout.sms_dialog,null);
 
-        builder.setView(alertView)
+        builder.setView(view)
                 .setPositiveButton(R.string.confirm,
                         new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        EditText codeET=view.findViewById(R.id.codeEditText);
+                        String inputCode=codeET.getText().toString();//empty input code
+                        String smsCode=Statuses.getSmsCode();
 
-                            }
-                        })
+                        if(inputCode.equals(smsCode)) {
+                            saveNameTel();
+                            Items.setReservationActivity(RegistrationActivity.this);
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(),R.string.errorCode,Toast.LENGTH_LONG).show();
+                        }
+                    }
+                })
                 .setNegativeButton(R.string.buttonCancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
                     }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
-        Button positiveButton = alert.getButton(AlertDialog.BUTTON_POSITIVE);
-        positiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText codeET = alertView.findViewById(R.id.codeEditText);
-                String inputCode = codeET != null ? codeET.getText().toString() : "";//empty input code
-                String smsCode = Statuses.getSmsCode();
-
-                if (inputCode.equals(smsCode)) {
-                    saveNameTel();
-                    Items.setReservationActivity(RegistrationActivity.this);
-                    ((DialogInterface) view).dismiss();
-                } else {
-                    Toast.makeText(getApplicationContext(), R.string.errorCode, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+                })
+                .create()
+                .show();
+        //        Button positiveButton = alert.getButton(AlertDialog.BUTTON_POSITIVE);
+//        positiveButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
     }
 
-    long getLastSmsTime() {
+    long getLastSmsTime(){
         SharedPreferences lastSmsPreference = getPreferences(MODE_PRIVATE);
 
-        return lastSmsPreference.getLong("lastSmsTime", -1);
+        return lastSmsPreference.getLong("lastSmsTime",-1);
     }
 
-    void saveLastSmsTime() {
+    void saveLastSmsTime(){
         SharedPreferences lastSmsPreference = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor editor = lastSmsPreference.edit();
 
-        long nextSmsTime = Calendar.getInstance().getTimeInMillis() + 180000;
+        long nextSmsTime=Calendar.getInstance().getTimeInMillis()+180000;
 
-        editor.putLong("lastSmsTime", nextSmsTime);
+        editor.putLong("lastSmsTime",nextSmsTime);
         editor.apply();
     }
 
