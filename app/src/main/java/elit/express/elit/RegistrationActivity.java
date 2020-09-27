@@ -128,6 +128,9 @@ public class RegistrationActivity extends AppCompatActivity {
         if (!name.equals("default value") && !phone.equals("default value")) {
             nameET.setText(name);
             phoneET.setText(phone);
+        } else{
+            name="";
+            phone="";
         }
     }
 
@@ -191,7 +194,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 if (inputCode.equals(smsCode)) {
                     saveNameTel();
                     Items.setReservationActivity(RegistrationActivity.this);
-                    ((DialogInterface) view).dismiss();
+//                    ((DialogInterface) view).dismiss();
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.errorCode, Toast.LENGTH_LONG).show();
                 }
