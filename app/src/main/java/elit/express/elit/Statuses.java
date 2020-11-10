@@ -11,7 +11,8 @@ import retrofit2.Response;
 
 public class Statuses {
     static private final String app = "android";
-    static private String ver = "2.0";
+    static private final String scriptVer = "2.0";
+    static private final String appVer = "2.0";
 
     static private ArrayList<Status1> status1ArrayList;
     static private ArrayList<Status2Otpr> status2Otprs;
@@ -28,7 +29,7 @@ public class Statuses {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .sendStatus1(ver, status, app, marshrut_reis, data_reis)
+                .sendStatus1(scriptVer, status, app, marshrut_reis, data_reis)
                 .enqueue(new Callback<ArrayList<Status1>>() {
                     @Override
                     public void onResponse(@NonNull Call<ArrayList<Status1>> call, @NonNull Response<ArrayList<Status1>> response) {
@@ -48,7 +49,7 @@ public class Statuses {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .sendStatus2(ver, status, app, marshrut_reis)
+                .sendStatus2(scriptVer, status, app, marshrut_reis)
                 .enqueue(new Callback<Status2>() {
                     @Override
                     public void onResponse(Call<Status2> call, Response<Status2> response) {
@@ -69,7 +70,7 @@ public class Statuses {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .sendStatus3(ver, status, app, marshrut_reis, zone)
+                .sendStatus3(scriptVer, status, app, marshrut_reis, zone)
                 .enqueue(new Callback<Map<String, String>[]>() {
                     @Override
                     public void onResponse(Call<Map<String, String>[]> call, Response<Map<String, String>[]> response) {
@@ -93,7 +94,7 @@ public class Statuses {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .sendStatus4(ver, status, app, marshrut_reis, id_reis,
+                .sendStatus4(scriptVer, status, app, marshrut_reis, id_reis,
                         date, time, fio, tel, mest, id_from, id_to, price, info)
                 .enqueue(new Callback<Map<String, String>[]>() {
                     @Override
@@ -115,7 +116,7 @@ public class Statuses {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .sendStatus5(ver, status, app, phone)
+                .sendStatus5(scriptVer, status, app, phone)
                 .enqueue(new Callback<ArrayList<Status5>>() {
                     @Override
                     public void onResponse(Call<ArrayList<Status5>> call, Response<ArrayList<Status5>> response) {
@@ -136,7 +137,7 @@ public class Statuses {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .sendStatus6(ver, status, app, orderid, new_status)
+                .sendStatus6(scriptVer, status, app, orderid, new_status)
                 .enqueue(new Callback<Map<String, String>[]>() {
                     @Override
                     public void onResponse(Call<Map<String, String>[]> call, Response<Map<String, String>[]> response) {
@@ -156,7 +157,7 @@ public class Statuses {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .sendStatus7(ver, status, app, marshrut_reis)
+                .sendStatus7(scriptVer, status, app, marshrut_reis)
                 .enqueue(new Callback<ArrayList<Status7>>() {
                     @Override
                     public void onResponse(@NonNull Call<ArrayList<Status7>> call, @NonNull Response<ArrayList<Status7>> response) {
@@ -176,7 +177,7 @@ public class Statuses {
 
         NetworkService.getInstance()
                 .getJSONApi()
-                .sendStatus8(ver, status, app, tel)
+                .sendStatus8(scriptVer, status, app, tel)
                 .enqueue(new Callback<Map<String, String>[]>() {
                     @Override
                     public void onResponse(Call<Map<String, String>[]> call, Response<Map<String, String>[]> response) {
@@ -242,8 +243,8 @@ public class Statuses {
         return smsCode;
     }
 
-    public static String getVer() {
-        return ver;
+    public static String getAppVer() {
+        return appVer;
     }
 
     public static String getActualVersion() {

@@ -138,7 +138,7 @@ public class LoadingActivity extends AppCompatActivity {
     }
 
     boolean isVersionCorrect() {
-        return Statuses.getVer().equals(Statuses.getActualVersion());
+        return Statuses.getAppVer().equals(Statuses.getActualVersion());
     }
 
     void updateAlert() {
