@@ -12,7 +12,7 @@ import retrofit2.Response;
 public class Statuses {
     static private final String app = "android";
     static private final String scriptVer = "2.0";
-    static private final String appVer = "2.0";
+    static private final String appVer = BuildConfig.DEBUG ? "2.0" : "2.1.3";
 
     static private ArrayList<Status1> status1ArrayList;
     static private ArrayList<Status2Otpr> status2Otprs;

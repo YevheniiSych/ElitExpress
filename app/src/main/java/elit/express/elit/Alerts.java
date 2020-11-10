@@ -31,7 +31,7 @@ public class Alerts {
                             @Override
                             public void onClick(DialogInterface dialog, int i) {
                                 LoadingDialog.loading(activity);
-                                sendReserve(callback,filler);
+                                sendReserve(callback,filler,activity);
 
                             }
                         }
@@ -49,13 +49,13 @@ public class Alerts {
         alert.show();
     }
 
-    private void sendReserve(final ReceiveCallback callback, Filler filler) {
+    private void sendReserve(final ReceiveCallback callback, Filler filler, final Activity activity) {
         String  race=filler.getRace(),
                 race_id=filler.getReisID(),
                 date=filler.getDate(),
                 time=filler.getTime(),
                 name=RegistrationActivity.getName(),
-                phone=RegistrationActivity.getPhone(),
+                phone=RegistrationActivity.getPhone(activity),
                 placeCount=filler.getPlaceCount(),
                 id_from=filler.getID_from(),
                 id_to=filler.getId_to(),

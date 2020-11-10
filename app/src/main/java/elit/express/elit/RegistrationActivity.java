@@ -1,6 +1,7 @@
 package elit.express.elit;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -152,7 +153,9 @@ public class RegistrationActivity extends AppCompatActivity {
         return phone.matches("\\d{10}");
     }
 
-    public static String getPhone() {
+     public static String getPhone(Activity activity) {
+        SharedPreferences user = activity.getSharedPreferences("user", MODE_PRIVATE);
+        phone = user.getString("phone", "default value");
         return phone;
     }
 

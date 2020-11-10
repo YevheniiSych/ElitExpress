@@ -63,7 +63,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     void downloadHistory() {
 
-        String phone = RegistrationActivity.getPhone();
+        String phone = RegistrationActivity.getPhone(this);
 
         Statuses.sendStatus5(new ReceiveCallback() {
             @Override
